@@ -97,8 +97,6 @@ export const registerUser = (data) => {
             requestRegisterUser()
         );
 
-        return;
-
         return API.post('users', data)
             .then((response) => {
                 const user = response.data;
