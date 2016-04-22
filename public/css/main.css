@@ -37,24 +37,30 @@ body {
     border-radius: 0;
 }
 
-.bg-primary {
-    background-color: #e0481a !important;
+.bg-primary,
+.btn-primary {
+    background-color: #F97223 !important;
 }
 
-.bg-primary .nav-link {
-    color: rgba(255, 255, 255, .7);
+.btn-primary {
+    border-color: #F97223 !important; 
 }
 
-.bg-primary .nav-link:hover {
-    color: #fff;
+.btn-primary:hover {
+    background-color: #E0631A !important;
+    border-color: #E0631A !important;
 }
 
 .bg-faded {
     background-color: #e6e6e6;
 }
 
-.navbar-light .navbar-nav .nav-link {
-    color: rgba(0, 0, 0, .4);
+.navbar-dark.bg-primary .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, .7);
+}
+
+.navbar-dark.bg-primary .navbar-nav .nav-link:hover {
+    color: #fff;
 }
 
 .dropdown-toggle {
