@@ -117,7 +117,7 @@ export const registerUser = (data) => {
                     receiveRegisterUserSuccess(user)
                 );
                 
-                Alert('success', `${user.firstName}, seu cadastro foi concluído. Seu usuário para acessar o sistema é: ${user.username}`);
+                Alert.success(`${user.firstName}, seu cadastro foi concluído. Seu usuário para acessar o sistema é: ${user.username}`, '/acessar');
 
                 return Promise.resolve(user);
             })
@@ -129,7 +129,7 @@ export const registerUser = (data) => {
                 );
 
                 if (! response.errors) {
-                    Alert('danger', 'Não foi possível concluir o seu cadastro. Tente novamente,');
+                    Alert.error('Não foi possível concluir o seu cadastro. Tente novamente,', '/cadastrar');
                 }
 
                 return Promise.reject();
@@ -177,7 +177,7 @@ export const updateUser = (username, data) => {
                     receiveUpdateUserSuccess(user)
                 );
 
-                Alert('success', 'Seu perfil foi atualizado');
+                Alert.success('Seu perfil foi atualizado', '/');
 
                 return Promise.resolve(user);
             })
@@ -188,7 +188,7 @@ export const updateUser = (username, data) => {
                     receiveUpdateUserError(errors)
                 );
 
-                Alert('danger', 'Não foi possível atualizar seu perfil. Tente novamente');
+                Alert.error('Não foi possível atualizar seu perfil. Tente novamente', '/perfil');
 
                 return Promise.reject();
             });
