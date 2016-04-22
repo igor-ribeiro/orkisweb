@@ -7,6 +7,8 @@ import Cookies from 'js-cookie';
 import API from '../helpers/api';
 import Alert from '../helpers/alert';
 
+import { clearForm } from './forms-actions';
+
 // --- CONSTANTS
 
 export const INITIAL_STATE = 'INITIAL_STATE';
@@ -46,6 +48,10 @@ export const loginUser = (credentials) => {
 
         return API.post('users/login', credentials)
             .then((response) => {
+                dispatch(
+                    clearForm('credentials')
+                );
+
                 return  dispatch(
                     receiveLoginSuccess(response.user, response.token)
                 );
@@ -102,6 +108,10 @@ export const registerUser = (data) => {
                 const user = response.data;
 
                 Cookies.set('user', user);
+
+                dispatch(
+                    clearForm('user')
+                );
                 
                 dispatch(
                     receiveRegisterUserSuccess(user)
@@ -158,6 +168,10 @@ export const updateUser = (username, data) => {
                 const user = response.data;
 
                 Cookies.set('user', user);
+
+                dispatch(
+                    clearForm('user')
+                );
                 
                 dispatch(
                     receiveUpdateUserSuccess(user)
