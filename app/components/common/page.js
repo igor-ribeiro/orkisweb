@@ -20,8 +20,6 @@ export default (props) => {
 
         if (hasAlertOnLocalStorage()) {
             alert = LocalStorage.getObject('alert');
-
-            LocalStorage.removeItem('alert');
         }
 
         if (hasAlertOnProps()) {
@@ -29,14 +27,16 @@ export default (props) => {
         }
 
         return !! alert
-            ? <Alert type={alert.type}>{alert.message}</Alert>
+            ? <Alert url={url} type={alert.type} scope={alert.scope}>{alert.message}</Alert>
             : '';
     };
+
+    const url = window.location.hash.substring(1);
 
     return (
         <div>
             <Navbar hideLinks={props.hideNav}/>
-            
+
             {renderAlert()}
 
             {props.children}
