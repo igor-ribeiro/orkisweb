@@ -20,7 +20,7 @@ export class ListNurseriesPage extends React.Component {
                 <Header>Meus Orquidários</Header>
 
                 <Container spaced={true}>
-                    <Link to="/" className="btn btn-success">Cadastrar</Link>
+                    <Link to="/orquidarios/cadastrar" className="btn btn-primary">Cadastrar</Link>
 
                     <LoadableContent isLoading={this.props.nurseries.isLoading}>
                         {this.renderNurseries()}
