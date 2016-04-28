@@ -2,7 +2,6 @@
 
 import Auth from '../helpers/auth';
 import { merge } from '../helpers/helpers';
-import ReducerHelper from './reducer-helper';
 import {
     INITIAL_STATE,
 
@@ -25,83 +24,87 @@ const initial = {
     errors: [],
 };
 
-const actions = {
-    INITIAL_STATE: (state, action) => {
-        return initial;
-    },
-    
-    REQUEST_LOGIN: (state, action) => {
-        return merge(state, {
-            isLoading: true,
-        });
-    },
+export default (state = initial, action) => {
+    switch (action.type) {
+        case INITIAL_STATE:
+            return initial;
+        break;
 
-    RECEIVE_LOGIN_SUCCESS: (state, action) => {
-        return merge(state, {
-            isLoading: false,
-            data: {
-                user: action.user,
-                token: action.token
-            },
-            errors: [],
-        });
-    },
+        case REQUEST_LOGIN:
+            return merge(state, {
+                isLoading: true,
+            });
+        break;
 
-    RECEIVE_LOGIN_ERROR: (state, action) => {
-        return merge(state, {
-            isLoading: false,
-            data: [],
-            errors: action.errors,
-        });
-    },
+        case RECEIVE_LOGIN_SUCCESS:
+            return merge(state, {
+                isLoading: false,
+                data: {
+                    user: action.user,
+                    token: action.token
+                },
+                errors: [],
+            });
+        break;
 
-    REQUEST_REGISTER_USER: (state, action) => {
-        return merge(state, {
-            isLoading: true,
-        });
-    },
+        case RECEIVE_LOGIN_ERROR:
+            return merge(state, {
+                isLoading: false,
+                data: [],
+                errors: action.errors,
+            });
+        break;
 
-    RECEIVE_REGISTER_USER_SUCCESS: (state, action) => {
-        return merge(state, {
-            isLoading: false,
-            data: {
-                user: action.user,
-            },
-            errors: [],
-        });
-    },
+        case REQUEST_REGISTER_USER:
+            return merge(state, {
+                isLoading: true,
+            });
+        break;
 
-    RECEIVE_REGISTER_USER_ERROR: (state, action) => {
-        return merge(state, {
-            isLoading: false,
-            data: [],
-            errors: action.errors,
-        });
-    },
+        case RECEIVE_REGISTER_USER_SUCCESS:
+            return merge(state, {
+                isLoading: false,
+                data: {
+                    user: action.user,
+                },
+                errors: [],
+            });
+        break;
 
-    REQUEST_UPDATE_USER: (state, action) => {
-        return merge(state, {
-            isLoading: true,
-        });
-    },
+        case RECEIVE_REGISTER_USER_ERROR:
+            return merge(state, {
+                isLoading: false,
+                data: [],
+                errors: action.errors,
+            });
+        break;
 
-    RECEIVE_UPDATE_USER_SUCCESS: (state, action) => {
-        return merge(state, {
-            isLoading: false,
-            data: {
-                user: action.user,
-            },
-            errors: [],
-        });
-    },
+        case REQUEST_UPDATE_USER:
+            return merge(state, {
+                isLoading: true,
+            });
+        break;
 
-    RECEIVE_UPDATE_USER_ERROR: (state, action) => {
-        return merge(state, {
-            isLoading: false,
-            data: {},
-            errors: action.errors,
-        });
-    },
+        case RECEIVE_UPDATE_USER_SUCCESS:
+            return merge(state, {
+                isLoading: false,
+                data: {
+                    user: action.user,
+                },
+                errors: [],
+            });
+        break;
+
+        case RECEIVE_UPDATE_USER_ERROR:
+            return merge(state, {
+                isLoading: false,
+                data: {},
+                errors: action.errors,
+            });
+        break;
+
+        default:
+            return state;
+        break;
+    }
 };
-
-export default (state = initial, action) => ReducerHelper(state, action, actions);

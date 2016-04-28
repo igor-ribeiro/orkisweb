@@ -24,61 +24,64 @@ const initial = {
     errors: [],
 };
 
-const actions = {
-    INITIAL: ()  => {
-        return initial;
-    },
+export default (state = initial, action) => {
+    switch (action.type) {
+        case INITIAL:
+            return initial;
+        break;
 
-    REQUEST_NURSERIES: (state, action) => {
-        return merge(state, {
-            isLoading: true,
-        }); 
-    },
+        case REQUEST_NURSERIES:
+            return merge(state, {
+                isLoading: true,
+            });
+        break;
 
-    RECEIVE_NURSERIES_SUCCESS: (state, action) => {
-        return merge(state, {
-            isLoading: false,
-            data: merge(state.data, {
-                nurseries: action.nurseries,
-            }),
-        });
-    },
+        case RECEIVE_NURSERIES_SUCCESS:
+            return merge(state, {
+                isLoading: false,
+                data: merge(state.data, {
+                    nurseries: action.nurseries,
+                }),
+            });
+        break;
 
-    RECEIVE_NURSERIES_ERROR: (state, action) => {
-        return merge(state, {
-            isLoading: false,
-            data: merge(state.data, {
-                nurseries: []
-            }),
-            errors: action.errors,
-        });
-    },
+        case RECEIVE_NURSERIES_ERROR:
+            return merge(state, {
+                isLoading: false,
+                data: merge(state.data, {
+                    nurseries: []
+                }),
+                errors: action.errors,
+            });
+        break;
 
-    REQUEST_NURSERY: (state, action) => {
-        return merge(state,{
-            isLoading: true,
-        });
-    },
+        case REQUEST_NURSERY:
+            return merge(state,{
+                isLoading: true,
+            });
+        break;
 
-    RECEIVE_NURSERY_SUCCESS: (state, action) => {
-        console.log(state);
-        return merge(state, {
-            isLoading: false,
-            data: merge(state.data, {
-                nursery: action.nursery,
-            }),
-        });
-    },
+        case RECEIVE_NURSERY_SUCCESS:
+            return merge(state, {
+                isLoading: false,
+                data: merge(state.data, {
+                    nursery: action.nursery,
+                }),
+            });
+        break;
 
-    RECEIVE_NURSERY_ERROR: (state, action) => {
-        return merge(state, {
-            isLoading: false,
-            data: merge(state.data, {
-                nursery: {},
-            }),
-            errors: action.errors,
-        });
-    },
+        case RECEIVE_NURSERY_ERROR:
+            return merge(state, {
+                isLoading: false,
+                data: merge(state.data, {
+                    nursery: {},
+                }),
+                errors: action.errors,
+            });
+        break;
+
+        default:
+            return state;
+        break;
+    }
 };
-
-export default (state = initial, action) => ReducerHelper(state, action, actions);

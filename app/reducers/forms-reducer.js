@@ -1,7 +1,6 @@
 'use strict';
 
 import { merge } from '../helpers/helpers';
-import ReducerHelper from './reducer-helper';
 import {
     UPDATE_FORM,
     CLEAR_FORM
@@ -13,18 +12,22 @@ const initial = {
     credentials: {},
 };
 
-const actions = {
-    UPDATE_FORM: (state, action) => {
-        return merge(state, action.data);
-    },
+export default (state = initial, action) => {
+    switch (action.type) {
+        case UPDATE_FORM:
+            return merge(state, action.data);
+        break;
 
-    CLEAR_FORM: (state, action) => {
-        const newState = merge(state, {});
+        case CLEAR_FORM:
+            const newState = merge(state, {});
 
-        newState[action.key] = initial[action.key];
+            newState[action.key] = initial[action.key];
 
-        return newState;
-    },
+            return newState;
+        break;
+
+        default:
+            return state;
+        break;
+    }
 };
-
-export default (state = initial, action) => ReducerHelper(state, action, actions);
