@@ -1,7 +1,6 @@
 'use strict';
 
 import { merge } from '../helpers/helpers';
-import ReducerHelper from './reducer-helper';
 
 import {
     INITIAL,
