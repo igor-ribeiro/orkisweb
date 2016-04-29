@@ -7,7 +7,6 @@ import parseForm from 'parse-form';
 import Humps from 'humps';
 import LocalStorage from 'humble-localstorage';
 
-import AppStore from '../../stores/app-store';
 import FormHelper from '../../helpers/form-helper';
 import AppHistory from '../../app-history';
 import { merge } from '../../helpers/helpers';
@@ -15,7 +14,7 @@ import {
     registerUser,
     initialState
 } from '../../actions/users-actions';
-import { updateForm } from '../../actions/forms-actions'; 
+import { updateForm } from '../../actions/forms-actions';
 
 import Page from '../common/page';
 import FormContainer from '../common/form/form-container';
@@ -26,6 +25,7 @@ import LoadableContent from '../common/loadable-content';
 export class RegisterPage extends React.Component {
     static contextTypes = {
         router: React.PropTypes.object.isRequired,
+        store: React.PropTypes.object,
     }
 
     render = () => {
@@ -51,24 +51,23 @@ export class RegisterPage extends React.Component {
     }
 
     componentDidMount = () => {
-        AppStore.dispatch(initialState());
+        this.context.store.dispatch(initialState());
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-     
+
         const user = Humps.decamelizeKeys(this.props.forms.user);
 
-        AppStore
-            .dispatch(registerUser(user))
+        this.context.store.dispatch(registerUser(user))
             .then(() => this.context.router.push('/acessar'))
             .catch(() => this.context.router.push('/cadastrar'));
     }
 
     handleChange = (event) => {
         const user = parseForm(event.target.form).body;
-        
-        AppStore.dispatch(
+
+        this.context.store.dispatch(
             updateForm({ user })
         );
     }

@@ -6,7 +6,6 @@ import parseForm from 'parse-form';
 
 import Auth from '../../helpers/auth';
 import { merge } from '../../helpers/helpers';
-import AppStore from '../../stores/app-store';
 import { updateUser } from '../../actions/users-actions';
 import AppHistory from '../../app-history';
 import { updateForm } from '../../actions/forms-actions';
@@ -21,6 +20,7 @@ import FormContainer from '../common/form/form-container';
 export class UserProfilePage extends React.Component {
     static contextTypes = {
         router: React.PropTypes.object.isRequired,
+        store: React.PropTypes.object,
     }
 
     render = () => {
@@ -50,7 +50,7 @@ export class UserProfilePage extends React.Component {
     }
 
     componentDidMount = () => {
-        AppStore.dispatch(
+        this.context.store.dispatch(
             updateForm({ user: Auth.user() })
         );
     }
@@ -60,8 +60,7 @@ export class UserProfilePage extends React.Component {
 
         const data = this.props.forms.user;
 
-        AppStore
-            .dispatch(updateUser(Auth.user().username, data))
+        this.context.store.dispatch(updateUser(Auth.user().username, data))
             .then(() => this.context.router.goBack())
             .catch(() => this.context.router.push('/perfil'));
     }
@@ -69,7 +68,7 @@ export class UserProfilePage extends React.Component {
     handleChange = (event) => {
         const user = parseForm(event.target.form).body;
 
-        AppStore.dispatch(
+        this.context.store.dispatch(
             updateForm({ user })
         );
     }
@@ -82,7 +81,7 @@ export class UserProfilePage extends React.Component {
 };
 
 const mapStateToProps = (state) => {
-   return merge(state, {}); 
+   return merge(state, {});
 };
 
 export const UserProfileContainer = connect(mapStateToProps)(UserProfilePage);

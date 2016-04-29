@@ -10,7 +10,6 @@ import { merge } from '../../helpers/helpers';
 import FormHelper from '../../helpers/form-helper';
 import Auth from '../../helpers/auth';
 import AppHistory from '../../app-history';
-import AppStore from '../../stores/app-store';
 import { initialState } from '../../actions/users-actions';
 import { updateForm } from '../../actions/forms-actions';
 
@@ -22,6 +21,10 @@ import LoginForm from './login-form';
 import LoadableContent from '../common/loadable-content';
 
 export class LoginPage extends React.Component {
+    static contextTypes = {
+        store: React.PropTypes.object,
+    }
+
     render = () => {
         return (
             <Page hideNav={true}>
@@ -30,7 +33,7 @@ export class LoginPage extends React.Component {
                         <SimpleHeader title="Acessar">
                             Se você não possui cadastro, <Link to="/cadastrar">cadastre-se aqui</Link>.
                         </SimpleHeader>
-                        
+
                         <LoginForm
                             handleSubmit={this.handleSubmit}
                             handleChange={this.handleChange}
@@ -48,14 +51,14 @@ export class LoginPage extends React.Component {
             return;
         }
 
-        AppStore.dispatch(
+        this.context.store.dispatch(
             initialState()
         );
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        
+
         const credentials = this.props.forms.credentials;
 
         Auth.login(credentials)
@@ -67,7 +70,7 @@ export class LoginPage extends React.Component {
     handleChange = (event) => {
         const credentials = parseForm(event.target.form).body;
 
-        AppStore.dispatch(
+        this.context.store.dispatch(
             updateForm({ credentials })
         );
     }

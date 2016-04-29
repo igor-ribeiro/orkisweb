@@ -17,6 +17,10 @@ import NurseryForm from './nursery-form';
 import LoadableContent from '../common/loadable-content';
 
 export class NurseryManagePage extends React.Component {
+    static contextTypes = {
+        store: React.PropTypes.object,
+    }
+
     render = () => {
         const action = this.props.params.document
             ? 'Atualizar'
@@ -44,7 +48,7 @@ export class NurseryManagePage extends React.Component {
 
         if (this.shouldHaveNursery()) {
             if (! this.hasNursery()) {
-                AppStore.dispatch(
+                this.context.store.dispatch(
                     fetchNursery(document)
                 );
             }
@@ -56,14 +60,10 @@ export class NurseryManagePage extends React.Component {
 
         if (document) {
             if (! this.props.nurseries.isLoading && ! this.hasNursery()) {
-                AppStore.dispatch(
-                    fetchNursery(document)
-                );
+                this.context.store.dispatch(fetchNursery(document));
             }
         } else {
-            AppStore.dispatch(
-                initial()
-            );
+            this.context.store.dispatch(initial());
         }
     }
 
