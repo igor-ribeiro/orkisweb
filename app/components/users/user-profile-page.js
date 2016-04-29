@@ -50,9 +50,11 @@ export class UserProfilePage extends React.Component {
     }
 
     componentDidMount = () => {
-        this.context.store.dispatch(
-            updateForm({ user: Auth.user() })
-        );
+        this.context.store.dispatch(updateForm({ user: Auth.user() }));
+    }
+
+    componentWillUnmount = () => {
+        this.context.store.dispatch(updateForm({ user: {} }));
     }
 
     handleSubmit = (event) => {

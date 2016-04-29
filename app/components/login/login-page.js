@@ -51,9 +51,11 @@ export class LoginPage extends React.Component {
             return;
         }
 
-        this.context.store.dispatch(
-            initialState()
-        );
+        this.context.store.dispatch(initialState());
+    }
+
+    componentWillUnmount = () => {
+        this.context.store.dispatch(updateForm({ credentials: {} }));
     }
 
     handleSubmit = (event) => {
