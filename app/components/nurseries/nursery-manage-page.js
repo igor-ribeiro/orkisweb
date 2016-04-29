@@ -23,6 +23,7 @@ import LoadableContent from '../common/loadable-content';
 export class NurseryManagePage extends React.Component {
     static contextTypes = {
         store: React.PropTypes.object,
+        router: React.PropTypes.object,
     }
 
     render = () => {
@@ -97,10 +98,16 @@ export class NurseryManagePage extends React.Component {
         const nursery = this.props.forms.nursery;
         const nurseryDocument = this.props.params.document;
 
-        this.context.store.dispatch(this.isEditing()
-            ? updateNursery(nurseryDocument, nursery)
-            : registerNursery(Auth.user().username, nursery)
-        );
+        const updateOrRegister = () => {
+            return this.isEditing()
+                ? updateNursery(nurseryDocument, nursery)
+                : registerNursery(Auth.user().username, nursery);
+        }
+
+        this.context.store.dispatch(updateOrRegister())
+            .then(() => this.context.router.push('/'))
+            .catch(() => {});
+
     }
 
     handleChange = (event) => {

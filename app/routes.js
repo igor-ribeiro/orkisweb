@@ -39,7 +39,7 @@ export default () => {
 
                     <Route path='/perfil' component={UserProfileContainer} onEnter={Auth.loggedIn}/>
 
-                    <Route path='/orquidarios/' component={NurseryPageHandler} onEnter={Auth.loggedIn}>
+                    <Route path='/orquidarios' component={NurseryPageHandler} onEnter={Auth.loggedIn}>
                         <IndexRoute component={ListNurseriesContainer}/>
 
                         <Route path='cadastrar' component={NurseryManageContainer}/>
@@ -47,10 +47,10 @@ export default () => {
                         <Route path=':document/editar' component={NurseryManageContainer}/>
                     </Route>
 
-                    <Route path='/acessar' component={LoginContainer} onEnter={Auth.loggedOut}/> 
-                    <Route path='/cadastrar' component={RegisterContainer} onEnter={Auth.loggedOut}/> 
-                    <Route path='/sair' component={Logout} onEnter={Auth.LoggedIn}/> 
-                    
+                    <Route path='/acessar' component={LoginContainer} onEnter={Auth.loggedOut}/>
+                    <Route path='/cadastrar' component={RegisterContainer} onEnter={Auth.loggedOut}/>
+                    <Route path='/sair' component={Logout} onEnter={Auth.LoggedIn}/>
+
                     <Route path='*' component={NotFoundPage}/>
                 </Route>
             </Router>

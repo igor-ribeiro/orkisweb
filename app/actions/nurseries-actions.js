@@ -136,6 +136,8 @@ export const registerNursery = (username, data) => {
             })
             .catch((response) => {
                 dispatch(receiveNurseryError(response.errors));
+
+                return Promise.reject(response.errors);
             });
     };
 };

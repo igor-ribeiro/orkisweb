@@ -4,9 +4,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import { fetchNurseries } from '../../actions/nurseries-actions';
-import AppStore from '../../stores/app-store';
+import { fetchNurseries, initial } from '../../actions/nurseries-actions';
 import { merge } from '../../helpers/helpers';
+import Auth from '../../helpers/auth';
 
 import LoadableContent from '../common/loadable-content';
 import NurseriesTable from './nurseries-table';
@@ -14,6 +14,10 @@ import Header from '../common/header';
 import Container from '../common/container';
 
 export class ListNurseriesPage extends React.Component {
+    static contextTypes = {
+        store: React.PropTypes.object,
+    }
+
     render = () => {
         return (
             <div>
@@ -31,15 +35,22 @@ export class ListNurseriesPage extends React.Component {
     }
 
     componentDidMount = () => {
-        if (! this.props.username) {
+        const username = this.props.user || Auth.user().username;
+
+        // @todo
+        if (this.props.nurseries.data.nurseries.length > 0) {
             return;
         }
 
-        AppStore.dispatch(
-            fetchNurseries(this.props.username)
+        this.context.store.dispatch(
+            fetchNurseries(username)
         );
     }
-    
+
+    componentWillUnmount = () => {
+        this.context.store.dispatch(initial());
+    }
+
     renderNurseries = () => {
         const nurseries = this.props.nurseries.data.nurseries || [];
 
