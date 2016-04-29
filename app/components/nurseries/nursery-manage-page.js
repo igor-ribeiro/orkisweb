@@ -9,8 +9,10 @@ import {
     initial,
     fetchNursery,
     updateNursery,
+    registerNursery,
 } from '../../actions/nurseries-actions';
 import { updateForm } from '../../actions/forms-actions';
+import Auth from '../../helpers/auth';
 
 import Header from '../common/header';
 import Container from '../common/container';
@@ -44,52 +46,45 @@ export class NurseryManagePage extends React.Component {
     }
 
     componentDidMount = () => {
-        if (this.shouldHaveNursery()) {
-            if (! this.hasNursery()) {
+        if (this.props.params.document) {
+            if (!! this.props.nurseries.data.nursery) {
                 this.context.store.dispatch(
                     fetchNursery(this.props.params.document)
                 ).then((nursery) => {
                     this.context.store.dispatch(updateForm({ nursery }));
                 });
+            } else {
+                this.context.store.dispatch(updateForm({ nursery: this.props.nurseries.data.nursery }));
             }
         }
     }
 
     componentWillReceiveProps = (next) => {
-        const document = next.params.document;
+        const currentDocument = this.props.params.document;
+        const nextDocument = next.params.document;
 
-        if (document) {
-            if (! this.props.nurseries.isLoading && ! this.hasNursery()) {
-                this.context.store.dispatch(fetchNursery(document));
-            }
-        } else {
-            this.context.store.dispatch(initial());
+        if (currentDocument !== nextDocument && ! this.props.nurseries.isLoading) {
+            this.context.store.dispatch(fetchNursery(document));
         }
     }
 
     componentWillUnmount = () => {
+        this.context.store.dispatch(initial());
         this.context.store.dispatch(updateForm({ nursery: {} }));
     }
 
-    shouldHaveNursery = () => {
-        return !! this.props.params.document;
-    }
-
     hasNursery = () => {
-        return Object.keys(this.props.nurseries.data.nursery).length > 0;
+        return Object.keys(this.props.nurseries.data.nursery).length > 0 || Object.keys(this.props.forms.nursery).length > 0;
     }
 
     renderForm = (action) => {
-        if (this.shouldHaveNursery() && ! this.hasNursery()) {
-            return <div></div>;
-        }
-
         const nursery = this.props.forms.nursery;
 
         return (
             <NurseryForm
                 button={action}
                 nursery={nursery}
+                errors={this.props.nurseries.errors}
                 handleChange={this.handleChange}
                 handleSubmit={this.handleSubmit}
                 />
@@ -102,7 +97,10 @@ export class NurseryManagePage extends React.Component {
         const nursery = this.props.forms.nursery;
         const nurseryDocument = this.props.params.document;
 
-        this.context.store.dispatch(updateNursery(nurseryDocument, nursery));
+        this.context.store.dispatch(this.isEditing()
+            ? updateNursery(nurseryDocument, nursery)
+            : registerNursery(Auth.user().username, nursery)
+        );
     }
 
     handleChange = (event) => {

@@ -16,6 +16,8 @@ import {
     REQUEST_UPDATE_NURSERY,
     RECEIVE_UPDATE_NURSERY_SUCCESS,
     RECEIVE_UPDATE_NURSERY_ERROR,
+
+    REQUEST_REGISTER_NURSERY,
 } from '../actions/nurseries-actions';
 
 const initial = {
@@ -80,6 +82,12 @@ export default (state = initial, action) => {
                     nursery: {},
                 }),
                 errors: action.errors,
+            });
+        break;
+
+        case REQUEST_REGISTER_NURSERY:
+            return merge(state, {
+                isLoading: true,
             });
         break;
 

@@ -12,6 +12,10 @@ export const REQUEST_NURSERY = 'REQUEST_NURSERY';
 export const RECEIVE_NURSERY_SUCCESS = 'RECEIVE_NURSERY_SUCCESS';
 export const RECEIVE_NURSERY_ERROR = 'RECEIVE_NURSERY_ERROR';
 
+export const REQUEST_REGISTER_NURSERY = 'REQUEST_REGISTER_NURSERY';
+export const RECEIVE_REGISTER_NURSERY_SUCCESS = 'RECEIVE_REGISTER_NURSERY_SUCCESS';
+export const RECEIVE_REGISTER_NURSERY_ERROR = 'RECEIVE_REGISTER_NURSERY_ERROR';
+
 export const REQUEST_UPDATE_NURSERY = 'REQUEST_UPDATE_NURSERY';
 export const RECEIVE_UPDATE_NURSERY_SUCCESS = 'RECEIVE_UPDATE_NURSERY_SUCCESS';
 export const RECEIVE_UPDATE_NURSERY_ERROR = 'RECEIVE_UPDATE_NURSERY_ERROR';
@@ -120,20 +124,42 @@ export const receiveNurseryError = (errors) => {
     };
 };
 
+export const registerNursery = (username, data) => {
+    return (dispatch) => {
+        dispatch(requestRegisterNursery());
+
+        return API.post(`nurseries`, { username, ...data })
+            .then((response) => {
+                dispatch(receiveNurserySuccess(response.data));
+
+                return Promise.resolve(response.data);
+            })
+            .catch((response) => {
+                dispatch(receiveNurseryError(response.errors));
+            });
+    };
+};
+
+export const requestRegisterNursery = () => {
+    return {
+        type: REQUEST_REGISTER_NURSERY,
+    };
+};
+
 export const updateNursery = (nurseryDocument, data) => {
     return (dispatch) => {
         dispatch(requestUpdateNursery());
 
         return API.put(`nurseries/${nurseryDocument}`, data)
             .then((response) => {
-                dispatch(receiveUpdateNurserySuccess(response.data))
+                dispatch(receiveNurserySuccess(response.data))
 
                 return Promise.resolve(response.data);
             })
-            .catch((errors) => {
-                dispatch(receiveUpdateNurseryError(errors));
+            .catch((response) => {
+                dispatch(receiveNurseryError(response.errors));
 
-                return Promise.reject(errors);
+                return Promise.reject(response.errors);
             });
     };
 };
@@ -141,19 +167,5 @@ export const updateNursery = (nurseryDocument, data) => {
 export const requestUpdateNursery = () => {
     return {
         type: REQUEST_UPDATE_NURSERY,
-    };
-};
-
-export const receiveUpdateNurserySuccess = (nursery) => {
-    return {
-        type: RECEIVE_NURSERIES_SUCCESS,
-        nursery,
-    };
-};
-
-export const receiveUpdateNurseryError = (errors) => {
-    return {
-        type: RECEIVE_NURSERIES_ERROR,
-        errors,
     };
 };
