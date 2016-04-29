@@ -11,16 +11,17 @@ import MultipleInputs from '../common/form/multiple-inputs';
 export default (props) => {
     const common = {
         errors: props.errors,
+        handleChange: props.handleChange,
     };
 
     return (
-        <Form>
+        <Form onSubmit={props.handleSubmit}>
             <MultipleInputs
                 inputs={nurseryFields}
                 model={props.nursery || {}}
                 common={common}
                 />
-        
+
             <Button
                 style="primary"
                 type="submit"
