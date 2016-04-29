@@ -11,7 +11,11 @@ import {
 
     REQUEST_NURSERY,
     RECEIVE_NURSERY_SUCCESS,
-    RECEIVE_NURSERY_ERROR
+    RECEIVE_NURSERY_ERROR,
+
+    REQUEST_UPDATE_NURSERY,
+    RECEIVE_UPDATE_NURSERY_SUCCESS,
+    RECEIVE_UPDATE_NURSERY_ERROR,
 } from '../actions/nurseries-actions';
 
 const initial = {
@@ -75,6 +79,28 @@ export default (state = initial, action) => {
                 data: merge(state.data, {
                     nursery: {},
                 }),
+                errors: action.errors,
+            });
+        break;
+
+        case REQUEST_UPDATE_NURSERY:
+            return merge(state, {
+                isLoading: true,
+            });
+        break;
+
+        case RECEIVE_UPDATE_NURSERY_SUCCESS:
+            return merge(state, {
+                isLoading: false,
+                data: merge(state.data, {
+                    nursery: action.nursery,
+                }),
+            });
+        break;
+
+        case RECEIVE_UPDATE_NURSERY_SUCCESS:
+            return merge(state, {
+                isLoading: false,
                 errors: action.errors,
             });
         break;
