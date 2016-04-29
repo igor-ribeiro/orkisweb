@@ -23,7 +23,7 @@ export class NurseryManagePage extends React.Component {
             : 'Cadastrar';
 
         const isLoading = this.props.nurseries.isLoading;
-    
+
         return (
             <div>
                 <Header>{action} Orquidário</Header>
@@ -37,10 +37,6 @@ export class NurseryManagePage extends React.Component {
                 </Container>
             </div>
         );
-    }
-
-    componentWillMount = () => {
-        return false;
     }
 
     componentDidMount = () => {
@@ -91,7 +87,7 @@ export class NurseryManagePage extends React.Component {
                 button={action}
                 nursery={nursery}
                 />
-        ); 
+        );
     }
 };
 
