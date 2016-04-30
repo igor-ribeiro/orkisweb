@@ -43,7 +43,7 @@ body {
 }
 
 .btn-primary {
-    border-color: #F97223 !important; 
+    border-color: #F97223 !important;
 }
 
 .btn-primary:hover {
@@ -95,7 +95,7 @@ body {
 .alert-success {
     color: #3c763d;
     background-color: #cbecbd;
-    border-color: #86de87; 
+    border-color: #86de87;
 }
 
 .alert-danger {
@@ -137,4 +137,12 @@ body {
 
 h1 small {
     font-size: 60%;
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+.pagination-container {
+    text-align: center;
 }
