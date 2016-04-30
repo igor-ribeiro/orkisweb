@@ -3,32 +3,32 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+import OrchidsTableRows from './orchids-table-rows';
+import Pagination from '../common/pagination';
+
 export default (props) => {
     if (props.orchids.length <= 0 && ! props.isLoading) {
         return <p>Nenhuma orquídea encontrada.</p>;
     }
 
-    return (
-        <table className="table spaced table-striped">
-            <thead className="thead-default">
-                <tr>
-                    <th>#</th>
-                    <th colSpan="2">Nome</th>
-                </tr>
-            </thead>
-            <tbody>
-                {props.orchids.map(renderOrchidsRows)}
-            </tbody>
-        </table>
-    );
-};
+    if (props.isLoading) {
+        return <div></div>;
+    }
 
-const renderOrchidsRows = (orchid, index) => {
     return (
-        <tr key={index}>
-            <td>{index + 1}</td>
-            <td>{orchid.name}</td>
-            <td><Link to="/orquideas">Detalhes</Link></td>
-        </tr>
+        <div>
+            <table className="table spaced table-striped">
+                <thead className="thead-default">
+                    <tr>
+                        <th>#</th>
+                        <th colSpan="2">Nome</th>
+                    </tr>
+                </thead>
+
+                <OrchidsTableRows orchids={props.orchids} pagination={props.pagination}/>
+            </table>
+
+            <Pagination pagination={props.pagination} current={props.currentPage || 1} url="orquideas"/>
+        </div>
     );
 };
