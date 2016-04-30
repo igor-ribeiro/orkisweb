@@ -56,6 +56,7 @@ export default () => {
 
                     <Route path='/orquideas' component={PageHandler} onEnter={Auth.loggedIn}>
                         <IndexRoute component={ListOrchidsContainer}/>
+                        <Route path='pagina/:page' component={ListOrchidsContainer}/>
                     </Route>
 
                     <Route path='*' component={NotFoundPage}/>
