@@ -26,7 +26,8 @@ export default (state = initial, action) => {
             return merge(state, {
                 isLoading: false,
                 data: merge(state.data, {
-                    orchids: action.orchids
+                    orchids: action.orchids,
+                    pagination: action.pagination,
                 }),
             });
         break;
