@@ -15,6 +15,7 @@ import AppStore from './stores/app-store';
 
 import App from './components/app';
 import HomePage from './components/home/home-page';
+import PageHandler from './components/common/page-handler';
 
 // Users
 import { LoginContainer } from './components/login/login-page';
@@ -23,9 +24,11 @@ import { RegisterContainer } from './components/register/register-page';
 import { UserProfileContainer } from './components/users/user-profile-page';
 
 // Nurseries
-import NurseryPageHandler from './components/nurseries/nursery-page-handler';
 import { ListNurseriesContainer } from './components/nurseries/list-nurseries-page';
 import { NurseryManageContainer } from './components/nurseries/nursery-manage-page';
+
+// Orchids
+import { ListOrchidsContainer } from './components/orchids/list-orchids-page';
 
 // Errors
 import NotFoundPage from './components/errors/not-found-page';
@@ -39,7 +42,7 @@ export default () => {
 
                     <Route path='/perfil' component={UserProfileContainer} onEnter={Auth.loggedIn}/>
 
-                    <Route path='/orquidarios' component={NurseryPageHandler} onEnter={Auth.loggedIn}>
+                    <Route path='/orquidarios' component={PageHandler} onEnter={Auth.loggedIn}>
                         <IndexRoute component={ListNurseriesContainer}/>
 
                         <Route path='cadastrar' component={NurseryManageContainer}/>
@@ -50,6 +53,10 @@ export default () => {
                     <Route path='/acessar' component={LoginContainer} onEnter={Auth.loggedOut}/>
                     <Route path='/cadastrar' component={RegisterContainer} onEnter={Auth.loggedOut}/>
                     <Route path='/sair' component={Logout} onEnter={Auth.LoggedIn}/>
+
+                    <Route path='/orquideas' component={PageHandler} onEnter={Auth.loggedIn}>
+                        <IndexRoute component={ListOrchidsContainer}/>
+                    </Route>
 
                     <Route path='*' component={NotFoundPage}/>
                 </Route>
