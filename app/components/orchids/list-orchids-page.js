@@ -26,7 +26,12 @@ export default class ListOrchidsPage extends React.Component {
 
                 <Container spaced={true}>
                     <LoadableContent isLoading={isLoading}>
-                        <OrchidsTable orchids={data.orchids || []} isLoading={isLoading}/>
+                        <OrchidsTable
+                            orchids={data.orchids || []}
+                            isLoading={isLoading}
+                            pagination={data.pagination}
+                            currentPage={this.props.params.page}
+                            />
                     </LoadableContent>
                 </Container>
             </div>
@@ -34,7 +39,21 @@ export default class ListOrchidsPage extends React.Component {
     }
 
     componentDidMount = () => {
-        this.context.store.dispatch(fetchOrchids());
+        this.fetchOrchids();
+    }
+
+    componentWillReceiveProps = (next) => {
+        if (this.props.params.page == next.params.page) {
+            return;
+        }
+
+        this.fetchOrchids(next.params.page);
+    }
+
+    fetchOrchids = (nextPage) => {
+        let page = nextPage || this.props.params.page || 1;
+
+        this.context.store.dispatch(fetchOrchids(page));
     }
 }
 
