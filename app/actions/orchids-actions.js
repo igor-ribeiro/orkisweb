@@ -5,6 +5,50 @@ import API from '../helpers/api';
 export const REQUEST_ORCHIDS = 'REQUEST_ORCHIDS';
 export const RECEIVE_ORCHIDS_SUCCESS = 'RECEIVE_ORCHIDS_SUCCESS';
 export const RECEIVE_ORCHIDS_ERROR = 'RECEIVE_ORCHIDS_ERROR';
+export const REQUEST_LOAD_ORCHIDS = 'REQUEST_LOAD_ORCHIDS';
+export const RECEIVE_LOAD_ORCHIDS_SUCCESS = 'RECEIVE_LOAD_ORCHIDS_SUCCESS';
+export const RECEIVE_LOAD_ORCHIDS_ERROR = 'RECEIVE_LOAD_ORCHIDS_ERROR';
+
+export const loadOrchids = (next) => {
+    return (dispatch) => {
+        if (next == false) {
+            return false;
+        }
+
+        dispatch(requestLoadOrchids());
+
+        return API.get(`orchids?page=${next}`)
+            .then((response) => {
+                const orchids = response.data.data;
+                const next = (response.data.currentPage == response.data.lastPage)
+                    ? false
+                    : response.data.currentPage + 1;
+
+                dispatch(receiveLoadOrchidsSuccess(orchids, next));
+            });
+    }
+};
+
+export const requestLoadOrchids = () => {
+    return {
+        type: REQUEST_LOAD_ORCHIDS,
+    };
+};
+
+export const receiveLoadOrchidsSuccess = (orchids, next) => {
+    return {
+        type: RECEIVE_LOAD_ORCHIDS_SUCCESS,
+        orchids,
+        next,
+    };
+};
+
+export const receiveLoadOrchidsError = (errors) => {
+    return {
+        type: RECEIVE_LOAD_ORCHIDS_ERROR,
+        errors,
+    };
+};
 
 export const fetchOrchids = (page = 1)  => {
     return (dispatch) => {
