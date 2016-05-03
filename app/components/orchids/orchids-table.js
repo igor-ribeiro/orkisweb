@@ -4,15 +4,10 @@ import React from 'react';
 import { Link } from 'react-router';
 
 import OrchidsTableRows from './orchids-table-rows';
-import Pagination from '../common/pagination';
 
 export default (props) => {
     if (props.orchids.length <= 0 && ! props.isLoading) {
         return <p>Nenhuma orquídea encontrada.</p>;
-    }
-
-    if (props.isLoading) {
-        return <div></div>;
     }
 
     return (
@@ -25,10 +20,8 @@ export default (props) => {
                     </tr>
                 </thead>
 
-                <OrchidsTableRows orchids={props.orchids} pagination={props.pagination}/>
+                <OrchidsTableRows orchids={props.orchids}/>
             </table>
-
-            <Pagination pagination={props.pagination} current={props.currentPage || 1} url="orquideas"/>
         </div>
     );
 };

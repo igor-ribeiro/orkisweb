@@ -4,10 +4,10 @@ import React from 'react';
 import { Link } from 'react-router';
 
 export default (props) => {
-    const { orchids, pagination } = props;
+    const { orchids } = props;
 
     const renderRows = (orchid, index) => {
-        const id = pagination.from + index;
+        const id = index + 1;
 
         return (
             <tr key={id}>
