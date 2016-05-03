@@ -11,7 +11,7 @@ const renderLinks = () => {
     return (
         <ul className="nav navbar-nav pull-md-right">
             <li className="nav-item">
-                <Link to="/" className="nav-link">Orquídeas</Link>
+                <Link to="/orquideas" className="nav-link">Orquídeas</Link>
             </li>
 
             <li className="nav-item btn-group">
@@ -41,10 +41,3 @@ export default (props) => {
         </div>
     );
 };
-
-
-
-
-
-
-
