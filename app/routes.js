@@ -40,24 +40,24 @@ export default () => {
                 <Route path='/' component={App}>
                     <IndexRoute component={HomePage} onEnter={Auth.loggedIn}/>
 
-                    <Route path='/perfil' component={UserProfileContainer} onEnter={Auth.loggedIn}/>
-
+                    {/* Nurseries */}
                     <Route path='/orquidarios' component={PageHandler} onEnter={Auth.loggedIn}>
                         <IndexRoute component={ListNurseriesContainer}/>
-
                         <Route path='cadastrar' component={NurseryManageContainer}/>
-
                         <Route path=':document/editar' component={NurseryManageContainer}/>
                     </Route>
 
-                    <Route path='/acessar' component={LoginContainer} onEnter={Auth.loggedOut}/>
-                    <Route path='/cadastrar' component={RegisterContainer} onEnter={Auth.loggedOut}/>
-                    <Route path='/sair' component={Logout} onEnter={Auth.LoggedIn}/>
-
+                    {/* Orhcids */}
                     <Route path='/orquideas' component={PageHandler} onEnter={Auth.loggedIn}>
                         <IndexRoute component={ListOrchidsContainer}/>
                         <Route path='pagina/:page' component={ListOrchidsContainer}/>
                     </Route>
+
+                    {/* Common */}
+                    <Route path='/perfil' component={UserProfileContainer} onEnter={Auth.loggedIn}/>
+                    <Route path='/acessar' component={LoginContainer} onEnter={Auth.loggedOut}/>
+                    <Route path='/cadastrar' component={RegisterContainer} onEnter={Auth.loggedOut}/>
+                    <Route path='/sair' component={Logout} onEnter={Auth.LoggedIn}/>
 
                     <Route path='*' component={NotFoundPage}/>
                 </Route>
