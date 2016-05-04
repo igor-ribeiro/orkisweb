@@ -3,8 +3,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import OrchidsTableRows from './orchids-table-rows';
-
 export default (props) => {
     if (props.orchids.length <= 0 && ! props.isLoading) {
         return <p>Nenhuma orquídea encontrada.</p>;
@@ -20,8 +18,22 @@ export default (props) => {
                     </tr>
                 </thead>
 
-                <OrchidsTableRows orchids={props.orchids}/>
+                <tbody>
+                    {props.orchids.map(renderRows)}
+                </tbody>
             </table>
         </div>
+    );
+};
+
+const renderRows = (orchid, index) => {
+    const id = index + 1;
+
+    return (
+        <tr key={id}>
+            <td>{id}</td>
+            <td>{orchid.name}</td>
+            <td><Link to={`/orquideas/${orchid.hash}`}>Detalhes</Link></td>
+        </tr>
     );
 };
