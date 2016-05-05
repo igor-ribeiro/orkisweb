@@ -10,7 +10,7 @@ import { loadOrchids } from '../../actions/orchids-actions';
 import Container from '../common/container';
 import Header from '../common/header';
 import LoadMore from '../common/load-more';
-import OrchidsCardsList from './orchids-cards';
+import OrchidsCardsList from './orchids-cards-list';
 
 export default class ListOrchidsPage extends React.Component {
     static contextTypes = {
