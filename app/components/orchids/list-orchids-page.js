@@ -8,9 +8,9 @@ import API from '../../helpers/api';
 import { loadOrchids } from '../../actions/orchids-actions';
 
 import Container from '../common/container';
-import OrchidsTable from './orchids-table';
 import Header from '../common/header';
 import LoadMore from '../common/load-more';
+import OrchidsCardsList from './orchids-cards';
 
 export default class ListOrchidsPage extends React.Component {
     static contextTypes = {
@@ -25,7 +25,7 @@ export default class ListOrchidsPage extends React.Component {
                 <Header>Orquídeas</Header>
 
                 <Container spaced={true}>
-                    <OrchidsTable orchids={data.orchids || []} isLoading={isLoading}/>
+                    <OrchidsCardsList orchids={data.orchids || []} isLoading={isLoading}/>
 
                     <LoadMore isVisible={data.next !== false} handleLoadMore={this.handleLoadMore} isLoading={isLoading}/>
                 </Container>
