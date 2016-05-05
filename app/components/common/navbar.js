@@ -9,7 +9,7 @@ import Container from './container';
 
 const renderLinks = () => {
     return (
-        <ul className="nav navbar-nav pull-md-right">
+        <ul className="nav navbar-nav pull-right">
             <li className="nav-item">
                 <Link to="/orquideas" className="nav-link">Orquídeas</Link>
             </li>
