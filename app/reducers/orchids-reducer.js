@@ -10,6 +10,10 @@ import {
     REQUEST_LOAD_ORCHIDS,
     RECEIVE_LOAD_ORCHIDS_SUCCESS,
     RECEIVE_LOAD_ORCHIDS_ERROR,
+
+    REQUEST_ORCHID,
+    RECEIVE_ORCHID_SUCCESS,
+    RECEIVE_ORCHID_ERROR,
 } from '../actions/orchids-actions';
 
 const initial = {
@@ -64,6 +68,28 @@ export default (state = initial, action) => {
         break;
 
         case RECEIVE_ORCHIDS_ERROR:
+            return merge(state, {
+                isLoading: false,
+                errors: action.errors,
+            });
+        break;
+
+        case REQUEST_ORCHID:
+            return merge(state, {
+                isLoading: true,
+            });
+        break;
+
+        case RECEIVE_ORCHID_SUCCESS:
+            return merge(state, {
+                isLoading: false,
+                data: merge(state.data, {
+                    orchid: action.orchid,
+                }),
+            });
+        break;
+
+        case RECEIVE_ORCHID_ERROR:
             return merge(state, {
                 isLoading: false,
                 errors: action.errors,
