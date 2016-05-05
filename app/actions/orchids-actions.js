@@ -5,9 +5,14 @@ import API from '../helpers/api';
 export const REQUEST_ORCHIDS = 'REQUEST_ORCHIDS';
 export const RECEIVE_ORCHIDS_SUCCESS = 'RECEIVE_ORCHIDS_SUCCESS';
 export const RECEIVE_ORCHIDS_ERROR = 'RECEIVE_ORCHIDS_ERROR';
+
 export const REQUEST_LOAD_ORCHIDS = 'REQUEST_LOAD_ORCHIDS';
 export const RECEIVE_LOAD_ORCHIDS_SUCCESS = 'RECEIVE_LOAD_ORCHIDS_SUCCESS';
 export const RECEIVE_LOAD_ORCHIDS_ERROR = 'RECEIVE_LOAD_ORCHIDS_ERROR';
+
+export const REQUEST_ORCHID = 'REQUEST_ORCHID';
+export const RECEIVE_ORCHID_SUCCESS = 'RECEIVE_ORCHID_SUCCESS';
+export const RECEIVE_ORCHID_ERROR = 'RECEIVE_ORCHID_ERROR';
 
 export const loadOrchids = (next) => {
     return (dispatch) => {
@@ -95,6 +100,48 @@ export const receiveOrchidsSuccess = (orchids, pagination) => {
 export const receiveOrchidsError = (errors) => {
     return {
         type: RECEIVE_ORCHIDS_ERROR,
+        errors,
+    };
+};
+
+export const fetchOrchid = (hash) => {
+    return (dispatch) => {
+        dispatch(requestOrchid());
+
+        return API.get(`orchids/${hash}`)
+            .then((response) => {
+                const orchid = response.data;
+
+                dispatch(receiveOrchidSuccess(orchid));
+
+                return Promise.resolve(orchid);
+            })
+            .catch((response) => {
+                const { errors } = response;
+
+                dispatch(receiveOrchidError(errors));
+
+                return Promise.reject(errors);
+            });
+    };
+};
+
+export const requestOrchid = () => {
+    return {
+        type: REQUEST_ORCHID,
+    };
+};
+
+export const receiveOrchidSuccess = (orchid) => {
+    return {
+        type: RECEIVE_ORCHID_SUCCESS,
+        orchid,
+    };
+};
+
+export const receiveOrchidError = (errors) => {
+    return {
+        type: RECEIVE_ORCHID_ERROR,
         errors,
     };
 };
