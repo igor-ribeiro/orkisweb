@@ -3,6 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
+import EllipsisText from 'react-ellipsis-text';
 
 import Container from '../common/container';
 
@@ -46,16 +47,23 @@ const RenderCard = (props) => {
     return (
         <div className="card" key={orchid.hash}>
             <div className="card-block">
-                <h5 className="card-block-title">{orchid.name}</h5>
+                <strong className="card-block-title">
+                    {orchid.name || orchid.scientificName}
+                </strong>
             </div>
 
-            <div className="card-img" style={{backgroundImage: 'url(http://www.aos.org/AOS/media/Content-Images/Orchids/orchid-care-phal.jpg)'}}></div>
+            <div className="card-img" style={{ backgroundImage: `url('${orchid.image || ''}')` }}></div>
 
             <div className="card-block">
-                <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                 <div className="text-right">
                     <Link to={`/orquideas/${orchid.hash}`} className="card-link">Detalhes</Link>
-                    <a href="#/orquideas" className="card-link dropdown-toggle">Adicionar</a>
+                    <div className="card-link btn-group">
+                        <a href="#/orquideas" className="card-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Adicionar</a>
+
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <Link to="/perfil" className="dropdown-item">Orquidário do Igor</Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

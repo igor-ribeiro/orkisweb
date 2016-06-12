@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { merge } from '../../helpers/helpers';
 import API from '../../helpers/api';
-import { loadOrchids } from '../../actions/orchids-actions';
+import { loadOrchids, receiveOrchidSuccess } from '../../actions/orchids-actions';
 
 import Container from '../common/container';
 import Header from '../common/header';
@@ -15,8 +15,9 @@ import OrchidsCardsList from './orchids-cards-list';
 export default class ListOrchidsPage extends React.Component {
     static contextTypes = {
         store: React.PropTypes.object,
+        router: React.PropTypes.object,
     }
-
+    
     render = () => {
         const { data, isLoading } = this.props.orchids;
 
