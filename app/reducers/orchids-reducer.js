@@ -18,7 +18,11 @@ import {
 
 const initial = {
     isLoading: false,
-    data: {},
+    data: {
+        orchids: [],
+        next: false,
+        orchid: {},
+    },
     errors: {},
 };
 
