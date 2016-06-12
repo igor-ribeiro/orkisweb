@@ -35,6 +35,10 @@ export default class ListOrchidsPage extends React.Component {
     }
 
     componentDidMount = () => {
+        if (this.props.orchids.data.orchids.length) {
+            return false;
+        }
+
         this.loadOrchids();
     }
 
