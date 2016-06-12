@@ -29,6 +29,7 @@ import { NurseryManageContainer } from './components/nurseries/nursery-manage-pa
 
 // Orchids
 import { ListOrchidsContainer } from './components/orchids/list-orchids-page';
+import { OrchidDetailContainer } from './components/orchids/orchid-detail-page';
 
 // Errors
 import NotFoundPage from './components/errors/not-found-page';
@@ -50,6 +51,7 @@ export default () => {
                     {/* Orhcids */}
                     <Route path='/orquideas' component={PageHandler} onEnter={Auth.loggedIn}>
                         <IndexRoute component={ListOrchidsContainer}/>
+                        <Route path=':hash' component={OrchidDetailContainer}/>
                     </Route>
 
                     {/* Common */}
