@@ -25,7 +25,7 @@ export default (props) => {
                 >
                 {props.label}
             </Label>
-            
+
             <Input
                 id={props.id}
                 type={props.type}
