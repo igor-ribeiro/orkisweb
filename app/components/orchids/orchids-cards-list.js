@@ -5,7 +5,10 @@ import { Link } from 'react-router';
 import _ from 'lodash';
 import EllipsisText from 'react-ellipsis-text';
 
+import Auth from '../../helpers/auth';
+
 import Container from '../common/container';
+import NurseriesDropdown from '../nurseries/nurseries-dropdown';
 
 export default (props) => {
     if (props.orchids.length == 0) {
@@ -57,12 +60,11 @@ const RenderCard = (props) => {
             <div className="card-block">
                 <div className="text-right">
                     <Link to={`/orquideas/${orchid.hash}`} className="card-link">Detalhes</Link>
-                    <div className="card-link btn-group">
-                        <a href="#/orquideas" className="card-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Adicionar</a>
 
-                        <div className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <Link to="/perfil" className="dropdown-item">Orquidário do Igor</Link>
-                        </div>
+                    <div className="card-link btn-group">
+                        <button className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Adicionar</button>
+
+                        <NurseriesDropdown nurseries={Auth.user().nurseries}/>
                     </div>
                 </div>
             </div>

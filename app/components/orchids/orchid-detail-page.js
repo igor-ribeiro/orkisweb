@@ -4,12 +4,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import Auth from '../../helpers/auth';
 import { merge, renderJSONStringToHTML } from '../../helpers/helpers';
 import { fetchOrchid, receiveOrchidSuccess } from '../../actions/orchids-actions';
 
 import Container from '../common/container';
 import LoadableContent from '../common/loadable-content';
 import Header from '../common/header';
+import NurseriesDropdown from '../nurseries/nurseries-dropdown';
 
 export default class OrchidDetailPage extends React.Component {
     static contextTypes = {
@@ -44,7 +46,11 @@ export default class OrchidDetailPage extends React.Component {
                     </div>
 
                     <Container spaced={true}>
-                        <button className="btn btn-primary dropdown-toggle">Adicionar</button>
+                        <div className="btn-group">
+                            <button className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Adicionar</button>
+
+                            <NurseriesDropdown nurseries={Auth.user().nurseries}/>
+                        </div>
 
                         <hr/>
 
