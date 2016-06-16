@@ -22,7 +22,7 @@ export default class Auth {
                 Auth.logout();
 
                 const data = AppStore.getState().users.data;
-                
+
                 Cookies.set('user', data.user);
                 Cookies.set('token', data.token, { expires: 1 });
 
@@ -41,7 +41,7 @@ export default class Auth {
 
         return ! Cookies.get('user') && ! Cookies.get('token');
     }
-    
+
     static loggedIn(nextState, replace) {
         if (Auth.check()) {
             return true;

@@ -17,7 +17,7 @@ export default class ListOrchidsPage extends React.Component {
         store: React.PropTypes.object,
         router: React.PropTypes.object,
     }
-    
+
     render = () => {
         const { data, isLoading } = this.props.orchids;
 
