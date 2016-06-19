@@ -22,7 +22,7 @@ export const loadOrchids = (next) => {
 
         dispatch(requestLoadOrchids());
 
-        return API.get(`orchids?page=${next}`)
+        return API.get(`orchids?page=${next}&withNurseries=true`)
             .then((response) => {
                 const orchids = response.data.data;
                 const next = (response.data.currentPage == response.data.lastPage)
