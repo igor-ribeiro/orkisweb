@@ -24,6 +24,8 @@ export default class ListOrchidsPage extends React.Component {
         const { data, isLoading } = this.props.orchids;
         const { nurseries } = this.props.nurseries.data;
 
+        console.log(nurseries);
+
         return (
             <div>
                 <Header>Orquídeas</Header>
@@ -38,11 +40,10 @@ export default class ListOrchidsPage extends React.Component {
     }
 
     componentDidMount = () => {
-        if (this.props.orchids.data.orchids.length) {
-            return false;
+        if (! this.props.orchids.data.orchids.length) {
+            this.loadOrchids();
         }
 
-        this.loadOrchids();
         this.context.store.dispatch(fetchNurseries(Auth.user().username));
     }
 

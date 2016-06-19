@@ -141,6 +141,7 @@ export const registerNursery = (username, data) => {
         return API.post(`nurseries`, { username, ...data })
             .then((response) => {
                 dispatch(receiveNurserySuccess(response.data));
+                requestNurseries(Auth.user().username);
 
                 const user = Object.assign(Auth.user(), {
                     nurseries: Object.assign(Auth.user().nurseries.concat([response.data])),
@@ -171,6 +172,7 @@ export const updateNursery = (nurseryDocument, data) => {
         return API.put(`nurseries/${nurseryDocument}`, data)
             .then((response) => {
                 dispatch(receiveNurserySuccess(response.data));
+                requestNurseries(Auth.user().username);
 
                 return Promise.resolve(response.data);
             })
