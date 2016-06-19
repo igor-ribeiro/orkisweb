@@ -3,7 +3,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-
 const renderNurseryRow = (nursery, index) => {
     return (
         <tr key={index}>
