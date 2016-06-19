@@ -1,6 +1,8 @@
 'use strict';
 
 import API from '../helpers/api';
+import Cookies from 'js-cookie';
+import Auth from '../helpers/auth';
 
 export const INITIAL = 'INITIAL';
 
@@ -19,6 +21,10 @@ export const RECEIVE_REGISTER_NURSERY_ERROR = 'RECEIVE_REGISTER_NURSERY_ERROR';
 export const REQUEST_UPDATE_NURSERY = 'REQUEST_UPDATE_NURSERY';
 export const RECEIVE_UPDATE_NURSERY_SUCCESS = 'RECEIVE_UPDATE_NURSERY_SUCCESS';
 export const RECEIVE_UPDATE_NURSERY_ERROR = 'RECEIVE_UPDATE_NURSERY_ERROR';
+
+export const REQUEST_ADD_ORCHID = 'REQUEST_ADD_ORCHID';
+export const RECEIVE_ADD_ORCHID_SUCCESS = 'RECEIVE_ADD_ORCHID_SUCCESS';
+export const RECEIVE_ADD_ORCHID_ERROR = 'RECEIVE_ADD_ORCHID_ERROR';
 
 // --- ACTIONS
 
@@ -132,6 +138,12 @@ export const registerNursery = (username, data) => {
             .then((response) => {
                 dispatch(receiveNurserySuccess(response.data));
 
+                const user = Object.assign(Auth.user(), {
+                    nurseries: Object.assign(Auth.user().nurseries.concat([response.data])),
+                });
+
+                Cookies.set('user', user);
+
                 return Promise.resolve(response.data);
             })
             .catch((response) => {
@@ -154,7 +166,7 @@ export const updateNursery = (nurseryDocument, data) => {
 
         return API.put(`nurseries/${nurseryDocument}`, data)
             .then((response) => {
-                dispatch(receiveNurserySuccess(response.data))
+                dispatch(receiveNurserySuccess(response.data));
 
                 return Promise.resolve(response.data);
             })
@@ -171,3 +183,41 @@ export const requestUpdateNursery = () => {
         type: REQUEST_UPDATE_NURSERY,
     };
 };
+
+export const addOrchid = (nurseryDocument, orchidHash) => {
+    return (dispatch) => {
+        dispatch(requestAddOrchid());
+
+        return API.post(`nurseries/${nurseryDocument}/${orchidHash}`)
+            .then((response) => {
+                dispatch(receiveAddOrchidSuccess(response.data));
+
+                return Promise.resolve(response.data);
+            })
+            .catch((response) => {
+                dispatch(receiveAddOrchidError(response.errors));
+
+                return Promise.reject(response.errors);
+            })
+    }
+}
+
+export const requestAddOrchid = () => {
+    return {
+        type: REQUEST_ADD_ORCHID,
+    };
+}
+
+export const receiveAddOrchidSuccess = (code) => {
+    return {
+        type: RECEIVE_ADD_ORCHID_SUCCESS,
+        code,
+    };
+}
+
+export const receiveAddOrchidError = (errors) => {
+    return {
+        type: RECEIVE_ADD_ORCHID_ERROR,
+        errors,
+    };
+}
