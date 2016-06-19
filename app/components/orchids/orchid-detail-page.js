@@ -85,6 +85,7 @@ export default class OrchidDetailPage extends React.Component {
         if (! this.props.nurseries.data.nurseries.length) {
             return <span>Em todos seus orquidários</span>;
         }
+
         return (
             <LoadableContent isLoading={this.props.nurseries.isLoading}>
                 <button className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Adicionar</button>
@@ -96,6 +97,7 @@ export default class OrchidDetailPage extends React.Component {
 
     handleAddToNursery = (nurseryDocument, orchidHash) => {
         this.context.store.dispatch(addOrchid(nurseryDocument, orchidHash));
+        this.context.store.dispatch(fetchNurseriesAvailableToOrchid(Auth.user().username, orchidHash));
     }
 }
 

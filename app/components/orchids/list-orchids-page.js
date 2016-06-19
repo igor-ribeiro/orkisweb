@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { merge } from '../../helpers/helpers';
 import API from '../../helpers/api';
 import Auth from '../../helpers/auth';
-import { loadOrchids, receiveOrchidSuccess } from '../../actions/orchids-actions';
+import { loadOrchids, receiveOrchidSuccess, fetchOrchid, receiveOrchidsSuccess } from '../../actions/orchids-actions';
 import { addOrchid, fetchNurseries } from '../../actions/nurseries-actions';
 
 import Container from '../common/container';
@@ -55,7 +55,24 @@ export default class ListOrchidsPage extends React.Component {
     }
 
     handleAddToNursery = (nurseryDocument, orchidHash) => {
-        this.context.store.dispatch(addOrchid(nurseryDocument, orchidHash));
+        const dispatch = this.context.store.dispatch;
+
+        dispatch(addOrchid(nurseryDocument, orchidHash))
+            .then(() => {
+                dispatch(fetchOrchid(orchidHash))
+                    .then((orchid) => {
+                        const orchids = this.props.orchids.data.orchids;
+                        const index = _.findIndex(orchids, [ 'hash', orchidHash ]);
+
+                        if (index < 0) {
+                            return;
+                        }
+
+                        orchids[index] = orchid;
+
+                        dispatch(receiveOrchidsSuccess(orchids, this.props.orchids.data.next));
+                    });
+            });
     }
 }
 
