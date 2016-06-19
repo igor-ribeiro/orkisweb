@@ -24,14 +24,18 @@ export default class ListOrchidsPage extends React.Component {
         const { data, isLoading } = this.props.orchids;
         const { nurseries } = this.props.nurseries.data;
 
-        console.log(nurseries);
-
         return (
             <div>
                 <Header>Orquídeas</Header>
 
                 <Container spaced={true}>
-                    <OrchidsCardsList orchids={data.orchids || []} isLoading={isLoading} nurseries={nurseries} handleAddToNursery={this.handleAddToNursery}/>
+                    <OrchidsCardsList
+                        orchids={data.orchids || []}
+                        isLoading={isLoading}
+                        nurseries={nurseries}
+                        handleAddToNursery={this.handleAddToNursery}
+                        loading={this.props.nurseries.loading || {}}
+                        />
 
                     <LoadMore isVisible={data.next !== false} handleLoadMore={this.handleLoadMore} isLoading={isLoading}/>
                 </Container>

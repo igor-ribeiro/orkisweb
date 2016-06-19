@@ -124,6 +124,9 @@ export default (state = initial, action) => {
         case REQUEST_ADD_ORCHID:
             return merge(state, {
                 isLoading: true,
+                loading: merge(state.loading, {
+                    [action.hash]: true,
+                }),
             });
         break;
 
@@ -131,8 +134,8 @@ export default (state = initial, action) => {
             return merge(state, {
                 isLoading: false,
                 errors: [],
-                data: merge(state.data, {
-                    code: action.code,
+                loading: merge(state.loading, {
+                    [action.data.hash]: false,
                 }),
             });
         break;
@@ -141,6 +144,9 @@ export default (state = initial, action) => {
             return merge(state, {
                 isLoading: false,
                 errors: action.errors,
+                loading: merge(state.loading, {
+                    [action.hash]: false,
+                }),
             });
         break;
 

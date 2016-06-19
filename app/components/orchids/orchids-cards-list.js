@@ -8,6 +8,7 @@ import EllipsisText from 'react-ellipsis-text';
 import Auth from '../../helpers/auth';
 
 import Container from '../common/container';
+import LoadableContent from '../common/loadable-content';
 import NurseriesDropdown from '../nurseries/nurseries-dropdown';
 
 export default (props) => {
@@ -55,11 +56,13 @@ const RenderCard = (props) => {
         }
 
         return (
-            <div className="card-link btn-group">
-                <button className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Adicionar</button>
+                <div className="card-link btn-group">
+                    <LoadableContent isLoading={props.loading[orchid.hash] || false}>
+                        <button className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Adicionar</button>
 
-                <NurseriesDropdown orchidHash={orchid.hash} nurseries={nurseries} handleAddToNursery={props.handleAddToNursery}/>
-            </div>
+                        <NurseriesDropdown orchidHash={orchid.hash} nurseries={nurseries} handleAddToNursery={props.handleAddToNursery}/>
+                    </LoadableContent>
+                </div>
         );
     }
 

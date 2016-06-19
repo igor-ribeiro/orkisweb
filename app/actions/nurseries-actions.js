@@ -192,7 +192,7 @@ export const requestUpdateNursery = () => {
 
 export const addOrchid = (nurseryDocument, orchidHash) => {
     return (dispatch) => {
-        dispatch(requestAddOrchid());
+        dispatch(requestAddOrchid(orchidHash));
 
         return API.post(`nurseries/${nurseryDocument}/${orchidHash}`)
             .then((response) => {
@@ -201,30 +201,32 @@ export const addOrchid = (nurseryDocument, orchidHash) => {
                 return Promise.resolve(response.data);
             })
             .catch((response) => {
-                dispatch(receiveAddOrchidError(response.errors));
+                dispatch(receiveAddOrchidError(response.errors, orchidHash));
 
                 return Promise.reject(response.errors);
             })
     }
 }
 
-export const requestAddOrchid = () => {
+export const requestAddOrchid = (hash) => {
     return {
         type: REQUEST_ADD_ORCHID,
+        hash,
     };
 }
 
-export const receiveAddOrchidSuccess = (code) => {
+export const receiveAddOrchidSuccess = (data) => {
     return {
         type: RECEIVE_ADD_ORCHID_SUCCESS,
-        code,
+        data,
     };
 }
 
-export const receiveAddOrchidError = (errors) => {
+export const receiveAddOrchidError = (errors, hash) => {
     return {
         type: RECEIVE_ADD_ORCHID_ERROR,
         errors,
+        hash,
     };
 }
 
