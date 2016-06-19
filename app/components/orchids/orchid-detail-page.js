@@ -96,8 +96,26 @@ export default class OrchidDetailPage extends React.Component {
     }
 
     handleAddToNursery = (nurseryDocument, orchidHash) => {
-        this.context.store.dispatch(addOrchid(nurseryDocument, orchidHash));
-        this.context.store.dispatch(fetchNurseriesAvailableToOrchid(Auth.user().username, orchidHash));
+        const dispatch = this.context.store.dispatch;
+
+        dispatch(addOrchid(nurseryDocument, orchidHash))
+            .then(() => {
+                dispatch(fetchOrchid(orchidHash))
+                    .then((orchid) => {
+                        const orchids = this.props.orchids.data.orchids;
+                        const index = _.findIndex(orchids, [ 'hash', orchidHash ]);
+
+                        if (index < 0) {
+                            return;
+                        }
+
+                        orchids[index] = orchid;
+
+                        dispatch(receiveOrchidsSuccess(orchids, this.props.orchids.data.next));
+                    });
+            });
+
+        dispatch(fetchNurseriesAvailableToOrchid(Auth.user().username, orchidHash));
     }
 }
 
