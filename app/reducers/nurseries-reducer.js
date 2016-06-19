@@ -22,6 +22,10 @@ import {
     REQUEST_ADD_ORCHID,
     RECEIVE_ADD_ORCHID_SUCCESS,
     RECEIVE_ADD_ORCHID_ERROR,
+
+    REQUEST_NURSERIES_AVAILABLE_TO_ORCHID,
+    RECEIVE_NURSERIES_AVAILABLE_TO_ORCHID_SUCCESS,
+    RECEIVE_NURSERIES_AVAILABLE_TO_ORCHID_ERROR,
 } from '../actions/nurseries-actions';
 
 const initial = {
@@ -134,6 +138,29 @@ export default (state = initial, action) => {
         break;
 
         case RECEIVE_ADD_ORCHID_ERROR:
+            return merge(state, {
+                isLoading: false,
+                errors: action.errors,
+            });
+        break;
+
+        case REQUEST_NURSERIES_AVAILABLE_TO_ORCHID:
+            return merge(state, {
+                isLoading: true,
+            });
+        break;
+
+        case RECEIVE_NURSERIES_AVAILABLE_TO_ORCHID_SUCCESS:
+            return merge(state, {
+                isLoading: false,
+                errors: [],
+                data: merge(state.data, {
+                    nurseries: action.nurseries,
+                }),
+            });
+        break;
+
+        case RECEIVE_NURSERIES_AVAILABLE_TO_ORCHID_ERROR:
             return merge(state, {
                 isLoading: false,
                 errors: action.errors,

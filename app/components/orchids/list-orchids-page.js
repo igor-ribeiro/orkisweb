@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 
 import { merge } from '../../helpers/helpers';
 import API from '../../helpers/api';
+import Auth from '../../helpers/auth';
 import { loadOrchids, receiveOrchidSuccess } from '../../actions/orchids-actions';
+import { addOrchid, fetchNurseries } from '../../actions/nurseries-actions';
 
 import Container from '../common/container';
 import Header from '../common/header';
@@ -20,13 +22,14 @@ export default class ListOrchidsPage extends React.Component {
 
     render = () => {
         const { data, isLoading } = this.props.orchids;
+        const { nurseries } = this.props.nurseries.data;
 
         return (
             <div>
                 <Header>Orquídeas</Header>
 
                 <Container spaced={true}>
-                    <OrchidsCardsList orchids={data.orchids || []} isLoading={isLoading}/>
+                    <OrchidsCardsList orchids={data.orchids || []} isLoading={isLoading} nurseries={nurseries} handleAddToNursery={this.handleAddToNursery}/>
 
                     <LoadMore isVisible={data.next !== false} handleLoadMore={this.handleLoadMore} isLoading={isLoading}/>
                 </Container>
@@ -40,6 +43,7 @@ export default class ListOrchidsPage extends React.Component {
         }
 
         this.loadOrchids();
+        this.context.store.dispatch(fetchNurseries(Auth.user().username));
     }
 
     loadOrchids = (page) => {
@@ -48,6 +52,10 @@ export default class ListOrchidsPage extends React.Component {
 
     handleLoadMore = () => {
         this.loadOrchids(this.props.orchids.data.next);
+    }
+
+    handleAddToNursery = (nurseryDocument, orchidHash) => {
+        this.context.store.dispatch(addOrchid(nurseryDocument, orchidHash));
     }
 }
 

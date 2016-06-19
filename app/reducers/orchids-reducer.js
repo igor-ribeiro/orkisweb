@@ -35,7 +35,7 @@ export default (state = initial, action) => {
         break;
 
         case RECEIVE_LOAD_ORCHIDS_SUCCESS:
-            const orchids = (state.data.orchids)
+            const orchids = (state.data.orchids && action.next !== 2)
                 ? state.data.orchids.concat(action.orchids)
                 : action.orchids;
 

@@ -19,7 +19,7 @@ export default (props) => {
 
     return (
         <Container>
-            <RenderCardsChunks chunks={chunks}/>
+            <RenderCardsChunks chunks={chunks} {...props}/>
         </Container>
     );
 };
@@ -28,7 +28,7 @@ const RenderCardsChunks = (props) => {
     return (
         <div>
             {props.chunks.map((orchids, index) => {
-                return <RenderCardDeck cards={orchids} key={index}/>
+                return <RenderCardDeck cards={orchids} key={index} {...props}/>
             })}
         </div>
     );
@@ -38,7 +38,7 @@ const RenderCardDeck = (props) => {
     return (
         <div className="card-deck">
            {props.cards.map((orchid, index) => {
-               return <RenderCard orchid={orchid} key={index}/>
+               return <RenderCard orchid={orchid} key={index} {...props}/>
            })}
        </div>
     )
@@ -46,6 +46,22 @@ const RenderCardDeck = (props) => {
 
 const RenderCard = (props) => {
     const { orchid } = props;
+
+    const nurseries = _.differenceBy(props.nurseries, orchid.nurseries, 'document');
+
+    function renderNurseriesOptions () {
+        if (! nurseries.length) {
+            return <small className="card-link">Em todos seus orquidários</small>;
+        }
+
+        return (
+            <div className="card-link btn-group">
+                <button className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Adicionar</button>
+
+                <NurseriesDropdown orchidHash={orchid.hash} nurseries={nurseries} handleAddToNursery={props.handleAddToNursery}/>
+            </div>
+        );
+    }
 
     return (
         <div className="card" key={orchid.hash}>
@@ -60,12 +76,7 @@ const RenderCard = (props) => {
             <div className="card-block">
                 <div className="text-right">
                     <Link to={`/orquideas/${orchid.hash}`} className="card-link">Detalhes</Link>
-
-                    <div className="card-link btn-group">
-                        <button className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Adicionar</button>
-
-                        <NurseriesDropdown nurseries={Auth.user().nurseries}/>
-                    </div>
+                    {renderNurseriesOptions()}
                 </div>
             </div>
         </div>

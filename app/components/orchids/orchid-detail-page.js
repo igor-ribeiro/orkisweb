@@ -7,6 +7,7 @@ import _ from 'lodash';
 import Auth from '../../helpers/auth';
 import { merge, renderJSONStringToHTML } from '../../helpers/helpers';
 import { fetchOrchid, receiveOrchidSuccess } from '../../actions/orchids-actions';
+import { addOrchid, fetchNurseriesAvailableToOrchid } from '../../actions/nurseries-actions';
 
 import Container from '../common/container';
 import LoadableContent from '../common/loadable-content';
@@ -47,9 +48,7 @@ export default class OrchidDetailPage extends React.Component {
 
                     <Container spaced={true}>
                         <div className="btn-group">
-                            <button className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Adicionar</button>
-
-                            <NurseriesDropdown nurseries={Auth.user().nurseries}/>
+                            {this.renderNurseriesOptions()}
                         </div>
 
                         <hr/>
@@ -78,6 +77,25 @@ export default class OrchidDetailPage extends React.Component {
         } else {
             this.context.store.dispatch(fetchOrchid(hash));
         }
+
+        this.context.store.dispatch(fetchNurseriesAvailableToOrchid(Auth.user().username, hash));
+    }
+
+    renderNurseriesOptions = () => {
+        if (! this.props.nurseries.data.nurseries.length) {
+            return <span>Em todos seus orquidários</span>;
+        }
+        return (
+            <LoadableContent isLoading={this.props.nurseries.isLoading}>
+                <button className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Adicionar</button>
+
+                <NurseriesDropdown orchidHash={this.props.orchids.data.orchid.hash} nurseries={this.props.nurseries.data.nurseries} handleAddToNursery={this.handleAddToNursery}/>
+            </LoadableContent>
+        );
+    }
+
+    handleAddToNursery = (nurseryDocument, orchidHash) => {
+        this.context.store.dispatch(addOrchid(nurseryDocument, orchidHash));
     }
 }
 
