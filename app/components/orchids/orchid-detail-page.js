@@ -58,6 +58,8 @@ export default class OrchidDetailPage extends React.Component {
 
                         <h2>Instruções:</h2>
                         <div>{renderJSONStringToHTML(data.orchid.instructions)}</div>
+
+                        {this.renderCodes()}
                     </Container>
                 </LoadableContent>
             </div>
@@ -116,6 +118,34 @@ export default class OrchidDetailPage extends React.Component {
             });
 
         dispatch(fetchNurseriesAvailableToOrchid(Auth.user().username, orchidHash));
+    }
+
+    renderCodes = () => {
+        const { orchid } = this.props.orchids.data;
+
+        if (this.props.orchids.isLoading) {
+            return null;
+        }
+
+        if (! orchid.nurseries) {
+            return null;
+        }
+
+        return (
+            <div>
+                <h2>Códigos</h2>
+                {orchid.nurseries.map((nursery) => {
+                    const file = `${nursery.document}/${orchid.hash}.png`;
+
+                    return (
+                        <div className="orchid-detail-code" key={nursery.document}>
+                            <img src={`http://orkisapi.dev/codes/${file}`}/>
+                            <h6>{nursery.name}</h6>
+                        </div>
+                    );
+                })}
+            </div>
+        );
     }
 }
 
