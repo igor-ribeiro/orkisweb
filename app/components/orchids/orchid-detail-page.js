@@ -125,11 +125,11 @@ export default class OrchidDetailPage extends React.Component {
     renderCodes = () => {
         const { orchid } = this.props.orchids.data;
 
-        if (this.props.orchids.isLoading) {
+        if (this.props.orchids.isLoading || ! orchid.nurseries) {
             return null;
         }
 
-        if (! orchid.nurseries) {
+        if (! orchid.nurseries.length) {
             return null;
         }
 
