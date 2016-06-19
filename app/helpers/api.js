@@ -3,6 +3,8 @@
 import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 import Humps from 'humps';
+import Cookies from 'js-cookie';
+import { merge } from './helpers';
 
 export default class API {
     static endpoint = 'http://orkisapi.dev/v1';
@@ -28,7 +30,7 @@ export default class API {
     }
 
     static call(method, resource, data = {}, headers = {}) {
-        const url = `${API.endpoint}/${resource}`;
+        let url = `${API.endpoint}/${resource}`;
 
         const options = {
             method,
@@ -39,10 +41,20 @@ export default class API {
             },
         };
 
+        data = merge(data, {
+            _token: Cookies.get('token'),
+        });
+
         if (! Array('get', 'head').includes(method)) {
             options.body = JSON.stringify(
                 Humps.decamelizeKeys(data)
             );
+        } else {
+            url += '?';
+
+            for (let key in data) {
+                url += `${Humps.decamelize(key)}=${data[key]}&`;
+            }
         }
 
         return fetch(url, options)
