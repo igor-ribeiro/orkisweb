@@ -12,7 +12,6 @@ const renderNurseryRow = (nursery, index) => {
             <td>{nursery.document}</td>
             <td>
                 <Link to={`orquidarios/${nursery.document}/editar`} className="btn btn-link">Editar</Link>
-                <Link to={`orquidarios`} className="btn btn-danger">Remover</Link>
             </td>
         </tr>
     );
