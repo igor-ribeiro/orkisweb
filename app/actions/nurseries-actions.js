@@ -26,6 +26,10 @@ export const REQUEST_ADD_ORCHID = 'REQUEST_ADD_ORCHID';
 export const RECEIVE_ADD_ORCHID_SUCCESS = 'RECEIVE_ADD_ORCHID_SUCCESS';
 export const RECEIVE_ADD_ORCHID_ERROR = 'RECEIVE_ADD_ORCHID_ERROR';
 
+export const REQUEST_NURSERIES_AVAILABLE_TO_ORCHID = 'REQUEST_NURSERIES_AVAILABLE_TO_ORCHID';
+export const RECEIVE_NURSERIES_AVAILABLE_TO_ORCHID_SUCCESS = 'RECEIVE_NURSERIES_AVAILABLE_TO_ORCHID_SUCCESS';
+export const RECEIVE_NURSERIES_AVAILABLE_TO_ORCHID_ERROR = 'RECEIVE_NURSERIES_AVAILABLE_TO_ORCHID_ERROR';
+
 // --- ACTIONS
 
 export const initial = () => {
@@ -218,6 +222,43 @@ export const receiveAddOrchidSuccess = (code) => {
 export const receiveAddOrchidError = (errors) => {
     return {
         type: RECEIVE_ADD_ORCHID_ERROR,
+        errors,
+    };
+}
+
+export const fetchNurseriesAvailableToOrchid = (username, orchidHash) => {
+    return (dispatch) => {
+        dispatch(requestNurseriesAvailableToOrchid());
+
+        return API.get(`nurseries/available-to-orchid/${username}/${orchidHash}`)
+            .then((response) => {
+                dispatch(receiveNurseriesAvailableToOrchidSuccess(response.data));
+
+                return Promise.resolve(response.data);
+            })
+            .catch((response) => {
+                dispatch(receiveNurseriesAvailableToOrchidError(response.errors));
+
+                return Promise.reject(response.errors);
+            })
+    };
+}
+
+export const requestNurseriesAvailableToOrchid = () => {
+    return {
+        type: REQUEST_NURSERIES_AVAILABLE_TO_ORCHID,
+    };
+}
+export const receiveNurseriesAvailableToOrchidSuccess = (nurseries) => {
+    return {
+        type: RECEIVE_NURSERIES_AVAILABLE_TO_ORCHID_SUCCESS,
+        nurseries,
+    };
+}
+
+export const receiveNurseriesAvailableToOrchidError = (errors) => {
+    return {
+        type: RECEIVE_NURSERIES_AVAILABLE_TO_ORCHID_ERROR,
         errors,
     };
 }
