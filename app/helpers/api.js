@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import { merge } from './helpers';
 
 export default class API {
-    static endpoint = 'http://orkisapi.dev/v1';
+    static endpoint = 'http://api.orkis.info/v1';
 
     static get(resource, data) {
         return API.call('get', resource, data);

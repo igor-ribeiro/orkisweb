@@ -36415,7 +36415,7 @@
 	    return API;
 	}();
 
-	API.endpoint = 'http://orkisapi.dev/v1';
+	API.endpoint = 'http://api.orkis.info/v1';
 	exports.default = API;
 	;
 
@@ -110832,7 +110832,7 @@
 
 	                    orchids[index] = orchid;
 
-	                    dispatch(receiveOrchidsSuccess(orchids, _this.props.orchids.data.next));
+	                    dispatch((0, _orchidsActions.receiveOrchidsSuccess)(orchids, _this.props.orchids.data.next));
 	                });
 	            });
 
@@ -110859,7 +110859,7 @@
 	                ),
 	                orchid.nurseries.map(function (nursery) {
 	                    var file = nursery.document + '/' + orchid.hash + '.png';
-	                    var url = 'http://orkisapi.dev/codes/' + file;
+	                    var url = 'http://api.orkis.info/codes/' + file;
 
 	                    return _react2.default.createElement(
 	                        'div',

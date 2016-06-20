@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import Auth from '../../helpers/auth';
 import { merge, renderJSONStringToHTML } from '../../helpers/helpers';
-import { fetchOrchid, receiveOrchidSuccess, requestOrchid } from '../../actions/orchids-actions';
+import { fetchOrchid, receiveOrchidSuccess, requestOrchid, receiveOrchidsSuccess } from '../../actions/orchids-actions';
 import { addOrchid, fetchNurseriesAvailableToOrchid } from '../../actions/nurseries-actions';
 
 import Container from '../common/container';
@@ -138,7 +138,7 @@ export default class OrchidDetailPage extends React.Component {
                 <h2>Códigos</h2>
                 {orchid.nurseries.map((nursery) => {
                     const file = `${nursery.document}/${orchid.hash}.png`;
-                    const url = `http://orkisapi.dev/codes/${file}`;
+                    const url = `http://api.orkis.info/codes/${file}`;
 
                     return (
                         <div className="orchid-detail-code" key={nursery.document}>
