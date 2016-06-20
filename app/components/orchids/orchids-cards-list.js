@@ -48,13 +48,13 @@ const RenderCardDeck = (props) => {
 const RenderCard = (props) => {
     const { orchid } = props;
 
-    if (! props.nurseries.length) {
-        return <small className="card-link">Você não possui orquidários</small>;
-    }
-
     const nurseries = _.differenceBy(props.nurseries, orchid.nurseries, 'document');
 
     function renderNurseriesOptions () {
+        if (! props.nurseries.length) {
+            return <small className="card-link">Você não possui orquidários</small>;
+        }
+
         if (! nurseries.length) {
             return <small className="card-link">Em todos seus orquidários</small>;
         }
