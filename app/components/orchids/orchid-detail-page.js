@@ -84,6 +84,10 @@ export default class OrchidDetailPage extends React.Component {
     }
 
     renderNurseriesOptions = () => {
+        if (! Auth.user().nurseries.length) {
+            return <span>Você não possui orquidários</span>;
+        }
+
         if (! this.props.nurseries.data.nurseries.length) {
             return <span>Em todos seus orquidários</span>;
         }
